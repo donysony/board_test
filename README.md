@@ -8,7 +8,7 @@ spring boot 2.7.11
 - spring web
 - thymeleaf
 
-java-11 
-maven 
-jar
-mysql
+java-11 <br>
+maven <br>
+jar<br>
+mysql<br>
