@@ -8,10 +8,11 @@ import java.util.List;
 public interface BoardService {
     public List<Board> getList();
 
-    public Board get(Long bno);
+    public Board get(Integer bno);
     public void register(Board board);
     public boolean modify(Board board);
 
-    public boolean remove(Long bno);
-    public boolean increaseViewCnt(Long bno);
+    public boolean remove(Integer bno);
+    public boolean increaseViewCnt(Integer bno);
+
 }

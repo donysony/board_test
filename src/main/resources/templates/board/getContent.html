@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <meta charset="UTF-8">
+    <title>Get content</title>
+    <link th:href="@{/static/css/custom.css}" rel="stylesheet">
+</head>
+
+<body>
+<div class="card shadow mb-4" layout:fragment="content">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Board Read Page</h6>
+    </div>
+    <div class="card-body" >
+        <div class="form-group">
+            <label>Bno</label> <input class="form-control" name='bno' th:value="${board.bno}" readonly="readonly">
+        </div>
+        <div class="form-group">
+            <label>Title</label> <input class="form-control" name='title' th:value="${board.title}" readonly="readonly">
+        </div>
+        <div class="form-group">
+            <label>Content</label> <input class="form-control" name='content' rows="3" cols="30" th:value="${board.content}" readonly="readonly">
+        </div>
+        <div class="form-group">
+            <label>Writer</label> <input class="form-control" name='writer' th:value="${board.writer}" readonly="readonly">
+        </div>
+        <form class="form-group">
+            <button type="button" th:data-oper='modify' class="btn btn-outline-secondary" >Modify</button>
+            <button type="button" th:data-oper='list' class="btn btn-primary" >List</button>
+        </form>
+        <form id='operForm' th:action="@{/board/modify}" method="get">
+            <input type='hidden' id='bno' name='bno' th:value="${board.bno}"/>
+        </form>
+        <hr>
+        <form th:action="@{|/comment/create/${board.bno}| method='post'}" class="getContent-form">
+            <textarea name="content" id="content" rows="3" cols="30"></textarea>
+            <button type="button" value="${board.bno}" class="btn btn-primary" >등록</button>
+        </form>
+
+    </div>
+</div>
+<script type="text/javascript"  layout:fragment="scriptdiv">
+    $(document).ready(function(){
+        let operForm = $("#operForm");
+
+        $("button[data-oper='modify']").on("click", function(e){
+            console.log("modify 클릭");
+            operForm.submit();
+        });
+
+        $("button[data-oper = 'list']").on("click", function(e){
+
+            console.log("list 클릭");
+            operForm.find("#bno").remove();
+            operForm.attr("action", "/board/list");
+            operForm.submit();
+        });
+
+    });
+</script>
+</body>
+</html>

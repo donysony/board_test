@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <meta charset="UTF-8">
+    <title>modify</title>
+<!--    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>-->
+</head>
+<body>
+<div class="card shadow mb-4" layout:fragment="content">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Board Read Page</h6>
+    </div>
+    <div class="card-body" >
+<form role="form" action="/board/modify" method="post">
+    <div class="form-group">
+        <label>Bno</label>
+        <input class="form-control" name="bno" th:value="${board.bno}" readonly="readonly">
+    </div>
+    <div class="form-group">
+        <label>Title</label>
+        <input class="form-control" name="title" th:value="${board.title}">
+    </div>
+    <div class="form-group">
+        <label>Text area</label>
+        <textarea class="form-control" rows="3" name="content" th:text="${board.content}"></textarea>
+    </div>
+    <div class="form-group">
+        <label>Writer</label>
+        <input class="form-control" name="writer" th:value="${board.writer}" readonly="readonly">
+    </div>
+
+    <button type="submit" data-oper='modify' class="btn btn-primary">Modify</button>
+    <button type="submit" data-oper='remove' class="btn btn-danger">Remove</button>
+    <button type="submit" data-oper='list' class="btn btn-info">List</button>
+    </form>
+    </div>
+</div>
+<script type="text/javascript" layout:fragment="scriptdiv">
+$(document).ready(function(){
+    let formObj = $("form");
+    $('button').on("click", function(e){
+        e.preventDefault(); //form이 기본으로 submit되는 것을 막음
+
+        let operation = $(this).data("oper");
+
+        console.log(operation);
+
+        if(operation === 'remove'){
+            formObj.attr("action","/board/remove");
+        }else if(operation === 'list'){
+            //move to list
+            /* self.location ="/board/list"; 변경전 */
+            formObj.attr("action","/board/list").attr("method","get");
+            formObj.empty();
+
+        }
+
+            formObj.submit();
+
+    });
+});
+</script>
+</body>
+</html>
+
+

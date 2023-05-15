@@ -11,12 +11,13 @@ import java.util.List;
 public interface BoardMapper {
     public List<Board> getList();
 
-    public void insert(Board board);
+    public boolean insert(Board board) throws Exception;
     public void insertSelectKey(Board board);
 
-    public Board read(Long bno);
-    public int delete(Long bno);
+    public Board read(Integer bno);
+    public int delete(Integer bno);
     public int update(Board board);
 
-    public int increaseViewCnt(Long bno);
+    public int increaseViewCnt(Integer bno);
+    public int updateCommentCnt(Integer bno);
 }

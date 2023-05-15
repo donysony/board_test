@@ -23,7 +23,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Board get(Long bno) {
+    public Board get(Integer bno) {
         log.info("get......" + bno);
 
         return mapper.read(bno);
@@ -37,7 +37,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public boolean remove(Long bno) {
+    public boolean remove(Integer bno) {
         log.info("remove..." + bno);
         return mapper.delete(bno) == 1;
 
@@ -52,7 +52,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public boolean increaseViewCnt(Long bno) {
+    public boolean increaseViewCnt(Integer bno) {
 
         log.info("count");
         return mapper.increaseViewCnt(bno) == 1;

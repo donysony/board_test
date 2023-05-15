@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Board list</title>
+</head>
+<body>
+<div class="card shadow mb-4" layout:fragment="content">
+    <div class="card-header py-3" style="display:flex; justify-content: space-between">
+        <h6 class="m-0 font-weight-bold text-primary" style="display:inline; ">Board List Page</h6>
+        <button type="button" data-oper='register' class="btn btn-primary" onclick="location='/board/register'" >Register</button>
+    </div>
+
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+
+            <tr>
+                <th>#번호</th>
+                <th>제목</th>
+                <th>내용</th>
+                <th>작성자</th>
+                <th>작성일</th>
+                <th>수정일</th>
+                <th>조회수</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="board: ${list}">
+                <td th:text="${board.bno}"></td>
+                <td><a th:href="@{|/board/${board.bno}|}" th:text="${board.title}"></a></td>
+                <td><a th:href="@{|/board/${board.bno}|}" th:text="${board.content}"></a></td>
+                <td th:text="${board.writer}"></td>
+                <td th:text="${#dates.format(board.regdate, 'yyyy-MM-dd')}"></td>
+                <td th:text="${#dates.format(board.updateDate, 'yyyy-MM-dd')}"></td>
+                <td th:text="${board.view_cnt}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+<script type="text/javascript" layout:fragment="scriptdiv">
+
+</script>
+<!--end content-->
+</body>
+</html>

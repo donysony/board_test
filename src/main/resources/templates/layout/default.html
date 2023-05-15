@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html 	lang="ko"
+         xmlns:th="http://www.thymeleaf.org"
+         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!-- 공통[head] 영역 시작 -->
+<th:block th:replace="fragments/head :: headFragment">
+  <title layout:title-pattern="$LAYOUT_TITLE : $CONTENT_TITLE">Default_Title</title>
+</th:block>
+<!-- [head] 영역 끝 -->
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+<!-- 사이드바 영역 시작 -->
+<th:block th:replace="fragments/sidebar :: sidebarFragment"></th:block>
+<!-- 사이드바 영역 끝 -->
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+    <!-- Main Content -->
+    <div id="content">
+      <!-- 상단바 영역 시작 -->
+      <th:block th:replace="fragments/top::topbarFragment"></th:block>
+      <!-- 상단바 영역 끝 -->
+
+      <!-- 본문영역 시작 -->
+      <th:block layout:fragment="content"></th:block>
+      <!-- 본문영역 끝 -->
+
+    </div>
+
+<!-- [footer] 영역 시작 -->
+<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+<!-- [footer] 영역 끝 -->
+
+  </div><!-- End of Content Wrapper -->
+</div><!-- End of Page Wrapper -->
+<!--공통 스크립트-->
+<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+<th:block layout:fragment="scriptdiv"></th:block>
+</body>
+</html>

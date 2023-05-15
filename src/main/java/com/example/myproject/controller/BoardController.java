@@ -6,10 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -22,20 +19,25 @@ public class BoardController {
     //BoardController은 BoardService에 의존적이므로 @AllArgsConstructor이용해 생성자 자동 주입
     private BoardService service;
 
+    @GetMapping("/default")
+    public String test(){
+        return "main";
+    }
+
     @GetMapping("/list")
     public String list(Model model) {
 
         log.info("list");
         List<Board> list = service.getList();
         model.addAttribute("list",list );
-        return "list";
+        return "board/list";
     }
 
     @GetMapping("/register")
     public String register(){
         //입력페이지를 보여주는 역할
 
-        return "register";
+        return "board/register";
     }
 
     @PostMapping("/register")
@@ -50,18 +52,28 @@ public class BoardController {
     }
 
     //    @GetMapping({"/get","/modify"})
-    @GetMapping("/get")
+/*    @GetMapping("/get")
     public void get(@RequestParam("bno") Long bno, Model model) {
         //게시물 조회
         log.info("/get");
         model.addAttribute("board", service.get(bno));
         service.increaseViewCnt(bno);
+    }*/
+
+    @GetMapping("/{bno}")
+    public String get(@PathVariable("bno") Integer bno, Model model){
+        //해당 번호에 대한 게시물 조회
+        log.info("/{bno}");
+        model.addAttribute("board", service.get(bno));
+        service.increaseViewCnt(bno);
+        return "board/getContent";
     }
     @GetMapping("/modify")
-    public void modify(@RequestParam("bno") Long bno, Model model){
+    public String modify(@RequestParam("bno") Integer bno, Model model){
         //게시물 수정페이지 보여주기
         log.info("/modify");
         model.addAttribute("board", service.get(bno));
+        return "board/modify";
     }
 
     @PostMapping("/modify")
@@ -76,7 +88,7 @@ public class BoardController {
     }
 
     @PostMapping("/remove")
-    public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) {
+    public String remove(@RequestParam("bno") Integer bno, RedirectAttributes rttr) {
         log.info("remove : " + bno);
         if(service.remove(bno)){
             //board를 삭제시 true이면

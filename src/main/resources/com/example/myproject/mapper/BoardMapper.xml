@@ -3,6 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.myproject.mapper.BoardMapper">
+
     <select id="getList" resultType="com.example.myproject.domain.Board">
         <![CDATA[
         select * from board where bno > 0
@@ -14,7 +15,7 @@
     </insert>
 
     <insert id="insertSelectKey">
-        <selectKey keyProperty="bno" order="BEFORE" resultType="long">
+        <selectKey keyProperty="bno" order="BEFORE" resultType="int">
             select case count(*) when 0 then 1 else max(bno)+1 end from board
         </selectKey>
 

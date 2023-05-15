@@ -2,6 +2,7 @@ package com.example.myproject.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -37,6 +38,13 @@ public class RootConfig {
         sqlSessionFactory.setDataSource(dataSource());
         return (SqlSessionFactory) sqlSessionFactory.getObject();
     }
+
+    //thymeleaf layout
+    @Bean
+    public LayoutDialect layoutDialect(){
+        return new LayoutDialect();
+    }
+
 
 
 
