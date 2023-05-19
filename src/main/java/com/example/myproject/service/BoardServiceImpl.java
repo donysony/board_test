@@ -7,7 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Log4j
 @Service
@@ -17,9 +19,9 @@ public class BoardServiceImpl implements BoardService {
     private BoardMapper mapper;
 
     @Override
-    public void register(Board board) {
+    public boolean register(Board board) throws Exception {
         log.info("register...." + board);
-        mapper.insertSelectKey(board);
+        return mapper.insert(board);
     }
 
     @Override
@@ -37,17 +39,22 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public boolean remove(Integer bno) {
-        log.info("remove..." + bno);
-        return mapper.delete(bno) == 1;
-
+    public int remove(Integer bno, String writer) {
+        Map map = new HashMap();
+        map.put("bno", bno);
+        map.put("writer", writer);
+        return mapper.delete(map);
+    }
+    @Override
+    public int removeAll(){
+        return mapper.deleteAll();
     }
 
     @Override
     public List<Board> getList() {
 
         log.info("getList.....");
-        return mapper.getList();
+        return mapper.selectAll();
 
     }
 

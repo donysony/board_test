@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <title>Get content</title>
     <link th:href="@{/static/css/custom.css}" rel="stylesheet">
+    <link th:href="@{https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -34,13 +35,49 @@
             <input type='hidden' id='bno' name='bno' th:value="${board.bno}"/>
         </form>
         <hr>
-        <form th:action="@{|/comment/create/${board.bno}| method='post'}" class="getContent-form">
-            <textarea name="content" id="content" rows="3" cols="30"></textarea>
-            <button type="button" value="${board.bno}" class="btn btn-primary" >등록</button>
-        </form>
+<!--댓글 부분 -->
+        <div class="container bootdey">
+            <div class="col-md-12 bootstrap snippets">
+                <div class="panel">
+                    <div class="panel-body">
+                        <textarea class="form-control" name="comment" id="comment" rows="2" placeholder="댓글을 입력하세요"></textarea>
+                        <div class="mar-top clearfix">
+                            <button class="btn btn-sm btn-primary pull-right" type="submit" id="sendBtn" ><i class="fa fa-pencil fa-fw"></i>작성</button>
+                            <a class="btn btn-trans btn-icon fa fa-video-camera add-tooltip" href="#"></a>
+                            <a class="btn btn-trans btn-icon fa fa-camera add-tooltip" href="#"></a>
+                            <a class="btn btn-trans btn-icon fa fa-file add-tooltip" href="#"></a>
+                        </div>
+                    </div>
+                </div> <!-- end panel class-->
+
+
+
+
+        <div id="commentCnt" ></div>
+        <div id="commentList" class="panel"></div>
+        <div id="replyForm" style="display:none">
+            <input type="text" name="replyComment"/>
+            <button type="button" id="wrtRepBtn" class="btn btn-primary">등록</button>
+            <hr>
+        </div>
+
+<!--        <div>n개의 댓글</div>-->
+<!--        <form th:action="@{|/comments/create/${board.bno}|}" method="post" class="getContent-form">-->
+<!--            <textarea name="comment" id="content" rows="3" cols="30"></textarea>-->
+<!--            <input type="hidden" name="bno" th:value="${board.bno}">-->
+<!--            <button type="submit" class="btn btn-primary" >등록</button>-->
+<!--        </form>-->
+
+<!--        <div id="commentList"></div>-->
+
 
     </div>
+
+
+
 </div>
+<!--댓글 처리 -->
+
 <script type="text/javascript"  layout:fragment="scriptdiv">
     $(document).ready(function(){
         let operForm = $("#operForm");
@@ -59,6 +96,9 @@
         });
 
     });
+
+
 </script>
+
 </body>
 </html>

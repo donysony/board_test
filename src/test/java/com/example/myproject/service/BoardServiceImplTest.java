@@ -13,14 +13,13 @@ class BoardServiceImplTest {
 @Autowired
 private BoardService service;
     @Test
-    void register() {
+    void register() throws Exception {
         Board board = new Board();
         board.setContent("내용");
         board.setTitle("제목");
-        board.setWriter("내가 썼다");
+        board.setWriter("라이언");
 
-        service.register(board);
-
+        assertTrue(service.register(board));
 
     }
 

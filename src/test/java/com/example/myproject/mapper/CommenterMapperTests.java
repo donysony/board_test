@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertTrue;
 
@@ -18,7 +20,7 @@ public class CommenterMapperTests {
 
     @Test
     public void selectAll(){
-        Comment comment = new Comment(2, 2, "댓글~", "오리");  //bno, pcno,comment, commenter
+        Comment comment = new Comment(2, 2, "댓글~", "오리");  //bno, pcno, comment, commenter
         mapper.insert(comment);
         List<Comment> list = mapper.selectAll(2);
         list.forEach(s->log.info(s));
@@ -51,6 +53,25 @@ public class CommenterMapperTests {
         Comment comment = new Comment(bno,1, "댓글내용", "댓글작성자");
         //댓글을 넣었다
         mapper.insert(comment);
+    }
+    @Test
+    public void selectReCommentAll(){
+        int cno = 25;
+        int bno = 17;
+        Map<String, Integer> map = new HashMap();
+        map.put("bno", bno);
+        map.put("cno", cno);
+
+
+        System.out.println(mapper.selectReCommentAll(map));
+
+    }
+    @Test
+    public void selectCommentOrder() {
+        int cno = 25;
+        int order = mapper.selectCommentOrder(cno);
+        System.out.println("order = " + order);
+
     }
 
 

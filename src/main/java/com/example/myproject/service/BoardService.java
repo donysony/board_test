@@ -9,10 +9,11 @@ public interface BoardService {
     public List<Board> getList();
 
     public Board get(Integer bno);
-    public void register(Board board);
+    public boolean register(Board board) throws Exception;
     public boolean modify(Board board);
 
-    public boolean remove(Integer bno);
+    public int remove(Integer bno, String writer) throws Exception;
+    public int removeAll();
     public boolean increaseViewCnt(Integer bno);
 
 }

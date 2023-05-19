@@ -4,7 +4,7 @@
 
 <mapper namespace="com.example.myproject.mapper.BoardMapper">
 
-    <select id="getList" resultType="com.example.myproject.domain.Board">
+    <select id="selectAll" resultType="com.example.myproject.domain.Board">
         <![CDATA[
         select * from board where bno > 0
         ]]>
@@ -30,8 +30,12 @@
         select count(*) from board
     </select>
 
-    <delete id="delete">
-        delete from board where bno = #{bno}
+    <delete id="delete" parameterType="map">
+        delete from board where bno = #{bno} and writer = #{writer}
+    </delete>
+
+    <delete id="deleteAll">
+        delete from board
     </delete>
 
     <update id="update">

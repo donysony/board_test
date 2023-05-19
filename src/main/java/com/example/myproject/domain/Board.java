@@ -21,4 +21,8 @@ public class Board {
         this.content = content;
         this.writer = writer;
     }
+    public Board(Integer bno, String writer){
+        this.bno = bno;
+        this.writer = writer;
+    }
 }

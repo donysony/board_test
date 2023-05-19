@@ -19,11 +19,6 @@ public class BoardController {
     //BoardController은 BoardService에 의존적이므로 @AllArgsConstructor이용해 생성자 자동 주입
     private BoardService service;
 
-    @GetMapping("/default")
-    public String test(){
-        return "main";
-    }
-
     @GetMapping("/list")
     public String list(Model model) {
 
@@ -36,29 +31,28 @@ public class BoardController {
     @GetMapping("/register")
     public String register(){
         //입력페이지를 보여주는 역할
-
         return "board/register";
     }
 
     @PostMapping("/register")
-    public String register(Board board, RedirectAttributes rttr) {
-        log.info("register : " + board);
-        service.register(board);
-        log.info("result : "+board.getBno());
-        rttr.addFlashAttribute("result", board.getBno());
-        //rttr.addAttribute("result", board.getBno()); // 새롭게 등록된 게시물의 번호를 같이 전달하기 위해
-        return "redirect:/board/list";
+    public String register(Board board, Model m, RedirectAttributes rttr) {
+        try{
+            if(!service.register(board))
+                throw new Exception("Write faild");
+            rttr.addFlashAttribute("msg","WRT_OK");
+            //rttr.addAttribute("result", board.getBno());
+            rttr.addFlashAttribute("result", board.getBno()); // 새롭게 등록된 게시물의 번호를 같이 전달하기 위해
+            return "redirect:/board/list";
+        }catch(Exception e){
+            e.printStackTrace();
+            m.addAttribute(board); //등록하려던 내용 보여주기
+            m.addAttribute("msg", "WRT_ERR");
+            return "board/register";
+        }
+
 
     }
 
-    //    @GetMapping({"/get","/modify"})
-/*    @GetMapping("/get")
-    public void get(@RequestParam("bno") Long bno, Model model) {
-        //게시물 조회
-        log.info("/get");
-        model.addAttribute("board", service.get(bno));
-        service.increaseViewCnt(bno);
-    }*/
 
     @GetMapping("/{bno}")
     public String get(@PathVariable("bno") Integer bno, Model model){
@@ -88,9 +82,9 @@ public class BoardController {
     }
 
     @PostMapping("/remove")
-    public String remove(@RequestParam("bno") Integer bno, RedirectAttributes rttr) {
+    public String remove(@RequestParam("bno") Integer bno, @RequestParam("writer") String writer, RedirectAttributes rttr) throws Exception {
         log.info("remove : " + bno);
-        if(service.remove(bno)){
+        if(service.remove(bno, writer) == 1 ){
             //board를 삭제시 true이면
             rttr.addFlashAttribute("result" , "success");
         }

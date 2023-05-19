@@ -8,12 +8,14 @@ import java.util.List;
 public interface CommentService {
     //bno에 작성한 댓글 전체 조회
     List<Comment> getCommentList(Integer bno);
+    //cno에 작성한 댓글 전체 조회
+    List<Comment> getReCommentList(Integer bno,Integer pcno);
 
     // 댓글 수 조회
     int getCount(Integer bno);
 
     //bno에 작성한 댓글 전체 삭제 -> bno를 삭제하면 함께 삭제되어야함
-    boolean remove(Comment comment);
+    boolean remove(Integer bno);
 
     boolean removeComment(Comment comment);
 

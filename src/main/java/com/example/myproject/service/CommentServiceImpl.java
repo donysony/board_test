@@ -1,15 +1,13 @@
 package com.example.myproject.service;
 
 import com.example.myproject.domain.Comment;
-import com.example.myproject.mapper.BoardMapper;
 import com.example.myproject.mapper.CommentMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -24,6 +22,15 @@ public class CommentServiceImpl implements CommentService {
     public List<Comment> getCommentList(Integer bno){
            return commapper.selectAll(bno);
     }
+    @Override
+    public List<Comment> getReCommentList(Integer bno,Integer cno ){
+
+        HashMap<String, Integer> map = new HashMap();
+        map.put("bno", bno);
+        map.put("cno", cno);
+
+        return commapper.selectReCommentAll(map);
+    }
     // 댓글 수 조회
     @Override
     public int getCount(Integer bno) {
@@ -31,8 +38,8 @@ public class CommentServiceImpl implements CommentService {
     }
 //bno에 작성한 댓글 전체 삭제 -> bno를 삭제하면 함께 삭제되어야함
     @Override
-    public boolean remove(@NotNull Comment comment){
-        return commapper.deleteAll(comment.getBno());
+    public boolean remove(Integer bno){
+        return commapper.deleteAll(bno);
     }
     @Override
     public boolean removeComment(Comment comment){
@@ -48,5 +55,13 @@ public class CommentServiceImpl implements CommentService {
         return commapper.update(comment) ;
     }
 
+
+    public boolean registerReComment(Comment comment){
+        comment.setCdep(1);
+
+        int c_ref_order = commapper.selectCommentOrder(comment.getCno()) + 1;
+        comment.setC_ref_order(c_ref_order);
+        return commapper.insertReComment(comment);
+    };
 
 }

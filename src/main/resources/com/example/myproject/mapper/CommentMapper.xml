@@ -10,9 +10,15 @@
 
     <insert id="insert" parameterType="com.example.myproject.domain.Comment">
         INSERT INTO tbl_comment
-            (pcno, bno, comment, commenter, c_regdate)
+            (bno, comment, commenter, c_regdate)
         VALUES
-            (#{pcno},#{bno}, #{comment}, #{commenter}, now())
+            (#{bno}, #{comment}, #{commenter}, now())
+    </insert>
+    <insert id="insertReComment" parameterType="com.example.myproject.domain.Comment">
+        INSERT INTO tbl_comment
+            (pcno, bno, comment, commenter, c_regdate,  cdep, c_ref_order)
+        VALUES
+            (#{pcno}, #{bno}, #{comment}, #{commenter}, now(), #{cdep},#{c_ref_order})
     </insert>
 
 
@@ -20,6 +26,19 @@
         SELECT *
         FROM tbl_comment
         WHERE bno = #{bno}
+    </select>
+
+    <select id="selectReCommentAll" parameterType="map" resultType="com.example.myproject.domain.Comment">
+        SELECT *
+        FROM tbl_comment
+        WHERE bno=#{bno} and pcno = #{cno}
+        ORDER BY c_ref_order;
+    </select>
+
+    <select id="selectCommentOrder" parameterType="int" resultType="int">
+        SELECT c_ref_order
+        FROM tbl_comment
+        WHERE cno = #{cno}
     </select>
 
     <delete id="deleteAll"  parameterType="int">
@@ -36,6 +55,7 @@
         c_updatedate = current_timestamp()
         WHERE cno = #{cno} AND commenter = #{commenter}
     </update>
+
 
 
 </mapper>
