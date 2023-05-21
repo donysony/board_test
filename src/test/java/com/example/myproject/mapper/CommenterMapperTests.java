@@ -41,7 +41,7 @@ public class CommenterMapperTests {
     }
     @Test
     public void update(){
-        Comment comment = new Comment( 4,"오리", "수정내용");
+        Comment comment = new Comment( 4,"내용내용123", "오리");
 //문제 : cno가 없는데 값이 들어감
 //문제 : cno랑 commenter가 다른데 true결과 나옴
 //cno와 commenter가 일치하는 내용 입력시 정상동작
@@ -49,8 +49,8 @@ public class CommenterMapperTests {
     }
     @Test
     public void insert(){
-        int bno = 2;
-        Comment comment = new Comment(bno,1, "댓글내용", "댓글작성자");
+        //(#{bno}, #{comment}, #{commenter}, now())
+        Comment comment = new Comment(2,0,"댓글내용", "댓글작성자");
         //댓글을 넣었다
         mapper.insert(comment);
     }

@@ -23,10 +23,10 @@ public class RootConfig {
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setDriverClassName("net.sf.log4jdbc.sql.jdbcapi.DriverSpy");
         hikariConfig.setJdbcUrl("jdbc:log4jdbc:mysql://localhost:3306/springboot_test?useUnicode=true&characterEncoding=utf8");
-        //hikariConfig.setUsername("root");
-        //hikariConfig.setPassword("root");
-        hikariConfig.setUsername("donysony");
-        hikariConfig.setPassword("123.dony");
+        hikariConfig.setUsername("root");
+        hikariConfig.setPassword("root");
+//        hikariConfig.setUsername("donysony");
+//        hikariConfig.setPassword("123.dony");
         HikariDataSource dataSource = new HikariDataSource(hikariConfig);
         return dataSource;
 

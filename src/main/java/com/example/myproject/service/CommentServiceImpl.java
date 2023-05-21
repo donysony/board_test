@@ -57,6 +57,7 @@ public class CommentServiceImpl implements CommentService {
 
 
     public boolean registerReComment(Comment comment){
+        //대댓글의 cdep를 1로 설정
         comment.setCdep(1);
 
         int c_ref_order = commapper.selectCommentOrder(comment.getCno()) + 1;

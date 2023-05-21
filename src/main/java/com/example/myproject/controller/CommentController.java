@@ -84,7 +84,6 @@ public class CommentController {
 
 
         try {
-
             if(!service.removeComment(comment))
                 throw new Exception("Delete Failed");
 

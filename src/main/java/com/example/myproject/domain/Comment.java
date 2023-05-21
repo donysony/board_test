@@ -34,7 +34,7 @@ public class Comment {
         this.c_ref_order = c_ref_order;
     }
 
-    public Comment(Integer bno, Integer cno, String comment, String commenter){
+    public Comment(Integer bno, Integer pcno, String comment, String commenter){
         this.bno = bno;
         this.pcno = pcno;
         this.comment = comment;
